@@ -1,15 +1,11 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.bval.jsr.ApacheValidationProvider;
-import org.hibernate.validator.HibernateValidator;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import javax.validation.Validation;
-import javax.validation.Validator;
 
 /**
  * This controller contains an action to handle HTTP requests to the
@@ -22,12 +18,7 @@ public class HomeController extends Controller {
     ObjectMapper objectMapper;
 
     public Result index() {
-        return ok(Validation.byDefaultProvider()
-                .configure()
-                .buildValidatorFactory()
-                .getValidator()
-                .getClass()
-                .getCanonicalName());
+        return ok("Image Inverter Server running Successfully!");
     }
 
     public Result preflight(String all) {

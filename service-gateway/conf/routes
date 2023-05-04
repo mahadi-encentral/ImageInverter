@@ -17,3 +17,8 @@ GET            /api-server/error/                                              c
 GET            /error                                                          controllers.HomeController.error()
 GET            /error/                                                         controllers.HomeController.error()
 GET            /api-docs                                                       controllers.HomeController.api()
+
+# My Endpoints
+GET           /images                                                          controllers.ImageController.getAllImages()
+GET           /images/:id                                                      controllers.ImageController.downloadImage(id: Long)
+POST          /images                                                          controllers.ImageController.uploadImage()

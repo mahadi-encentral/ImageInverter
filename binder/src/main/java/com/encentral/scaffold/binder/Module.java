@@ -6,6 +6,7 @@
 package com.encentral.scaffold.binder;
 
 import com.google.inject.AbstractModule;
+import com.mamt4real.app.impl.UploadModule;
 import play.libs.akka.AkkaGuiceSupport;
 
 
@@ -21,6 +22,8 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
         super.configure();
 
         bind(BigBang.class).asEagerSingleton();
+
+        install(new UploadModule());
 
     }
 }

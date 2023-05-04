@@ -20,8 +20,8 @@ public class UploadImpl implements IUpload {
 
     @Override
     public Optional<Upload> getUpload(long id) {
-        Upload upload = jpaApi.em().find(Upload.class, id);
-        return Optional.ofNullable(upload);
+        JpaUpload jpaUpload = jpaApi.em().find(JpaUpload.class, id);
+        return Optional.of(UploadMapper.jpaUploadToUpload(jpaUpload));
     }
 
     @Override
@@ -34,7 +34,6 @@ public class UploadImpl implements IUpload {
     public Upload addUpload(Upload upload) {
         JpaUpload jpaUpload = UploadMapper.uploadToJpaUpload(upload);
         jpaApi.em().persist(jpaUpload);
-        jpaUpload = jpaApi.em().merge(jpaUpload);
         return UploadMapper.jpaUploadToUpload(jpaUpload);
     }
 

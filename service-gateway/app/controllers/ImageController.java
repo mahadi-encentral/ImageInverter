@@ -14,8 +14,6 @@ import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -47,26 +45,21 @@ public class ImageController extends Controller {
         for(int i=0; i<width; i++){
             for(int j=0; j<height; j++){
                 Pixel pixel = new Pixel(image.getRGB(i, j));
-                pixel.invertPixel();
+//                Optionally use pixel.eslInvert()
+//                pixel.invertPixel();
+                pixel.eslInvert();
                 image.setRGB(i, j, pixel.getPoint());
             }
         }
 
         String date_suffix = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
-        String filepath = String.format("C:/Users/MAHADI/Desktop/uploads/%s_%s.%s",
+        String filepath = String.format("C:\\Users\\MAHADI\\Desktop\\uploads\\%s_%s.%s",
                 name.replaceAll("\\.", "_"),
                 date_suffix.replaceAll("[:\\-\\.]", "_"), extension);
         File saved = new File(filepath);
         saved.mkdir();
-        ImageIO.write(image, extension, upload.getFile());
-        try {
-            Files.createFile(saved.toPath());
-            Files.move(upload.getFile().toPath(), saved.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        }catch (IOException io){
-            System.out.print(io);
-            throw io;
-        }
+        ImageIO.write(image, extension, saved);
         Upload dbDoc = iUpload.addUpload(new Upload(saved.getPath()));
         return created("Image saved successfully with id: " + dbDoc.getId());
     }
